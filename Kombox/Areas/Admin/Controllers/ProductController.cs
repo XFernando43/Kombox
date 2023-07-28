@@ -3,9 +3,11 @@ using Kombox.DataAccess.Repository.IRepository;
 using Kombox.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol;
 
-namespace Kombox.Controllers
+namespace Kombox.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -13,7 +15,7 @@ namespace Kombox.Controllers
 
         public ProductController(IUnitOfWork uow, IWebHostEnvironment webHostEnvironment)
         {
-            this._unitOfWork = uow;
+            _unitOfWork = uow;
             _webHostEnvironment = webHostEnvironment;
 
         }
@@ -81,11 +83,13 @@ namespace Kombox.Controllers
         {
             if (ModelState.IsValid)
             {
+             
                 string wwwRothPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRothPath, @"images\product");
+                    
                     if (!string.IsNullOrEmpty(product.ImageUrl))
                     {
                         // Delete old image
@@ -95,14 +99,15 @@ namespace Kombox.Controllers
                             System.IO.File.Delete(oldImagePath);
                         }
                     }
+
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
                     product.ImageUrl = @"\images\product\" + fileName;
                 }
-
-
+               
+               
                 _unitOfWork.ProductRepository.Update(product);
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
