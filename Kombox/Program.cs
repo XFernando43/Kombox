@@ -1,18 +1,20 @@
 using Kombox.DataAccess.Data;
 using Kombox.DataAccess.Repository;
 using Kombox.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
      builder.Configuration.GetConnectionString("DafultConnection")
     ));
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
@@ -29,7 +31,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.MapRazorPages(); // Mapear paginas de razor
 
 app.MapControllerRoute(
     name: "default",

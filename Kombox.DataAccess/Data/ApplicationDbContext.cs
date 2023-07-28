@@ -1,20 +1,25 @@
 ﻿using Kombox.Models.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kombox.DataAccess.Data
 {
-    public partial class ApplicationDbContext : DbContext
+    public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
 
+
         public DbSet<Category> categories { get; set; }
         public DbSet<Product> products { get; set; }
-        
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); //To work identity scaffold
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId = 1, Name = "Action", DisplayOrder = 10 },
                 new Category { CategoryId = 2, Name = "Action", DisplayOrder = 10 },
