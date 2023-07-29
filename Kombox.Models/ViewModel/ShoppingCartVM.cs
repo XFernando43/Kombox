@@ -1,9 +1,11 @@
-﻿namespace Bulky.Models.ViewModel
+﻿using Kombox.Models.Models;
+
+namespace Bulky.Models.ViewModel
 {
     public class ShoppingCartVM
     {
-        //public IEnumerable<ShoppingCart> ShoppingCartList {  get; set; }
+        public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
         //public OrderHeader OrderHeader { get; set; }
-        //public double OrderTotal { get; set; }
+        public double OrderTotal { get; set; }
     }
 }

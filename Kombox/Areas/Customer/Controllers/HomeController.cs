@@ -1,4 +1,6 @@
-﻿using Kombox.Models;
+﻿using Kombox.DataAccess.Repository.IRepository;
+using Kombox.Models;
+using Kombox.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,15 +11,44 @@ namespace Kombox.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
+            IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category");
+            return View(productList);
+        }
+
+        public IActionResult Details(int ProductId)
+        {
+            //ShoppingCart cart = new()
+            //{
+            //    Product = _unitOfWork.ProductRepository.Get(u => u.Id == ProductId, includeProperties: "Category"),
+            //    Count = 1,
+            //    Product_Id = ProductId,
+            //};
+
+            //return View(cart);
             return View();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {

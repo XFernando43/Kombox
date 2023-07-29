@@ -145,7 +145,7 @@ namespace Kombox.Areas.Identity.Pages.Account
                     Text = i,
                     Value = i,
                 }),
-                CompanyList = _unitOfWork.CompanyRepository.GetAll().Select(i=> new SelectListItem
+                CompanyList = _unitOfWork.CompanyRepository.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.CompanyName,
                     Value = i.CompanyId.ToString()
@@ -179,8 +179,6 @@ namespace Kombox.Areas.Identity.Pages.Account
                 {
                     user.CompanyId = Input.CompanyId;
                 }
-
-
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
