@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Kombox.DataAccess\Kombox.DataAccess.csproj" />
+    <ProjectReference Include="..\Kombox.SD\Kombox.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
