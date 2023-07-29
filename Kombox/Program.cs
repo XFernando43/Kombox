@@ -16,6 +16,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>                      // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+{                                                                           // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+    options.LoginPath = $"/Identity/Account/Login";                         // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+    options.LogoutPath = $"/Identity/Account/Logout";                       // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";           // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+});                                                                         // en caso quieran colocar la ruta de acceso a administrador les pedira un logeo primero y no los dejara ´:3
+
+
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
