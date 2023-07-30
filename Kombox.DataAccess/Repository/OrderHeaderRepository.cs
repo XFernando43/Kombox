@@ -20,6 +20,29 @@ namespace Kombox.DataAccess.Repository
         {
             _db.orderHeaders.Update(orderDetail);
         }
+
+        public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+        {
+            var orderFromDb = _db.orderHeaders.FirstOrDefault(u => u.OrderHeaderId == id);
+            if (orderFromDb != null) { 
+                orderFromDb.OrderStatus = orderStatus;
+                if (!string.IsNullOrEmpty(paymentStatus))
+                {
+                    orderFromDb.PaymentStatus = paymentStatus;
+                }
+            }
+        }
+
+        public void UpdateStripePaymentId(int id, string sesionId, string paymentIntentId)
+        {
+            var orderFromDb = _db.orderHeaders.FirstOrDefault(u => u.OrderHeaderId == id);
+            if (!string.IsNullOrEmpty(sesionId)){
+                orderFromDb.SessionId = sesionId;
+            }if (!string.IsNullOrEmpty(paymentIntentId)){
+                orderFromDb.PaymentItentId = paymentIntentId;
+                orderFromDb.PaymentDate = DateTime.Now;
+            }
+        }
     }
 
 }

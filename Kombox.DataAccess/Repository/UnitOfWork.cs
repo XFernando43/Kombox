@@ -11,10 +11,10 @@ namespace Kombox.DataAccess.Repository
         public IProductRepository ProductRepository { get; set; }
         public ICompanyRepository CompanyRepository { get; set; }
         public IShoppingCartRepository ShoppingCartRepository { get; set; }
-        public IApplicationUserRepository UserRepository { get; set; }
-
         public IOrderHeaderRepository OrderHeaderRepository { get; set; }
         public IOrderDetailRepository OrderDetailRepository { get; set; }
+
+        public IApplicationUserRepository ApplicationUserRepository { get; set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -23,7 +23,7 @@ namespace Kombox.DataAccess.Repository
             ProductRepository = new ProductRepository(_db);
             CompanyRepository = new CompanyRepository(_db);
             ShoppingCartRepository = new ShoppingCartRepository(_db);
-            UserRepository = new ApplicationUserRepository(_db);
+            ApplicationUserRepository = new ApplicationUserRepository(_db);
 
             OrderHeaderRepository = new OrderHeaderRepository(_db);
             OrderDetailRepository = new OrderDetailRepository(_db);
