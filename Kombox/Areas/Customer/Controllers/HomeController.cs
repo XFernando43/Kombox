@@ -41,8 +41,8 @@ namespace Kombox.Areas.Customer.Controllers
         public IActionResult Details(ShoppingCart cart) {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             cart.ApplicationUserId = userId;
+
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.ApplicationUserId == userId && u.Product_Id == cart.Product_Id);
 

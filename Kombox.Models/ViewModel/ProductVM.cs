@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Bulky.Models.ViewModel
+namespace Kombox.Models.ViewModel
 {
     public class ProductVM
     {
         public Product product { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
+
     }
 }
-

@@ -1,9 +1,6 @@
-﻿using Bulky.Models.ViewModel;
-using Kombox.DataAccess.Repository.IRepository;
+﻿using Kombox.DataAccess.Repository.IRepository;
 using Kombox.Models.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kombox.Areas.Admin.Controllers
 {
@@ -74,7 +71,7 @@ namespace Kombox.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error deleting product" });
             }
-            
+
             _unitOfWork.CompanyRepository.Remove(obj);
             _unitOfWork.Save();
             return Json(new { success = true, message = "deleting product successfully" });

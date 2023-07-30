@@ -1,9 +1,8 @@
-﻿using Bulky.Models.ViewModel;
-using Kombox.DataAccess.Repository.IRepository;
+﻿using Kombox.DataAccess.Repository.IRepository;
 using Kombox.Models.Models;
+using Kombox.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NuGet.Protocol;
 
 namespace Kombox.Areas.Admin.Controllers
 {
@@ -83,13 +82,13 @@ namespace Kombox.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-             
+
                 string wwwRothPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRothPath, @"images\product");
-                    
+
                     if (!string.IsNullOrEmpty(product.ImageUrl))
                     {
                         // Delete old image
@@ -106,8 +105,8 @@ namespace Kombox.Areas.Admin.Controllers
                     }
                     product.ImageUrl = @"\images\product\" + fileName;
                 }
-               
-               
+
+
                 _unitOfWork.ProductRepository.Update(product);
                 _unitOfWork.Save();
                 return RedirectToAction("Index");

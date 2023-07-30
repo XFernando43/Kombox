@@ -1,6 +1,6 @@
 ﻿using Kombox.Models.Models;
 
-namespace Bulky.Models.ViewModel
+namespace Kombox.Models.ViewModel
 {
     public class ShoppingCartVM
     {
