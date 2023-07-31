@@ -227,7 +227,7 @@ namespace Kombox.Areas.Customer.Controllers
                 Session session = service.Get(orderHeader.SessionId);
                 if (session.PaymentStatus.ToLower()=="paid"){
                     _unitOfWork.OrderHeaderRepository.UpdateStripePaymentId
-                        (ShoppingCartVM.OrderHeader.OrderHeaderId, session.Id, session.PaymentIntentId);
+                        (id, session.Id, session.PaymentIntentId);
                     _unitOfWork.OrderHeaderRepository.UpdateStatus(id, SD.Status_Approved, SD.Payment_StatusApproved);
                     _unitOfWork.Save();
                 }
