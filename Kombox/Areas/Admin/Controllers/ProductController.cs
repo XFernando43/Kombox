@@ -24,6 +24,17 @@ namespace Kombox.Areas.Admin.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> products = _unitOfWork.ProductRepository.GetAll().ToList();
+            return Ok(new
+            {
+                status = true,
+                Product = products
+            });
+        }
+
         public IActionResult Create()
         {
             ProductVM productVM = new()
@@ -64,6 +75,7 @@ namespace Kombox.Areas.Admin.Controllers
 
             return View();
         }
+
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)

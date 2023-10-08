@@ -1,0 +1,147 @@
+﻿@{
+    var status = Context.Request.Query["status"];
+    var pending = "text-primary";
+    var inprocess = "text-primary";
+    var completed = "text-primary";
+    var approved = "text-primary";
+    var all = "text-primary";
+    switch (status)
+    {
+        case "pending":
+            pending = "active text-white bg-primary";
+            break;
+        case "inprocess":
+            inprocess = "active text-white bg-primary";
+            break;
+        case "completed":
+            completed = "active text-white bg-primary";
+            break;
+        case "approved":
+            approved = "active text-white bg-primary";
+            break;
+        default:
+            all = "active text-white bg-primary";
+            break;
+    }
+}
+
+<div class="card shadow border-0 mt-4 py-2">
+    <div class="card-header ml-0 py-3">
+        <div class="row pt-4 pb-4">
+            <div class="col-6">
+                <h2 class="text-primary px-4">
+                    Product List
+                </h2>
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Orders Managment
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between pb-1 pt-2">
+            <span></span>
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
+                <li class="list-group-item @inprocess">In Process</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="pending">
+                <li class="list-group-item @pending">Pending</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="completed">
+                <li class="list-group-item @completed">Completed</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="approved">
+                <li class="list-group-item @approved">Approved</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="all">
+                <li class="list-group-item @all">All</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body p-1 mb-lg-0">
+        <table class="table table-bordered table-striped" id="TblOrders">
+            <thead>
+                <tr>
+                    <th class="text-center">Actions</th>
+                    <th class="text-center">ID</th>
+                    <th>ApplicationUser</th>
+                    <th>Phone Number</th>
+                    <th>OrderStatus</th>
+                    <th class="text-center">OrderTotal</th>
+                    <th class="text-center"></th>
+                </tr>
+
+            </thead>
+
+        </table>
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+
+
+
+@* Este script Evita que la pagina recarge y se hagan las validaciones correspondientes *@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script src="~/js/Admin/Orders/Orders.js"> </script>
+
+}
+
+
+<script>
+    // Función para confirmar la eliminación
+    function confirmDelete(productId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, se hace la solicitud DELETE
+                deleteProduct(productId);
+            }
+        });
+    }
+
+    // Función para enviar la solicitud DELETE
+    function deleteProduct(productId) {
+        $.ajax({
+            url: '/Admin/Product/Delete/' + productId,
+            type: 'DELETE',
+            success: function (data) {
+                Swal.fire(
+                    'Deleted!',
+                    'The product has been deleted.',
+                    'success'
+                ).then(() => {
+                    // Después de mostrar el mensaje, actualiza la página
+                    window.location.reload();
+                });
+            },
+            error: function (error) {
+                Swal.fire(
+                    'Error!',
+                    'An error occurred while deleting the product.',
+                    'error'
+                );
+            }
+        });
+    }
+</script>
+
